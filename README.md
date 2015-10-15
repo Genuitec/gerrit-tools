@@ -1,2 +1,2 @@
-# egit-tools
-Genuitec tools for EGit and Gerrit Workflow
+# Gerrit Tools
+Various tools for Gerrit, including tools for Gerrit Workflow.

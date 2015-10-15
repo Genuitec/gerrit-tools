@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.genuitec.eclipse.egit.tools</groupId>
-	<artifactId>com.genuitec.eclipse.egit.tools.parent</artifactId>
+	<groupId>com.genuitec.eclipse.gerrit.tools</groupId>
+	<artifactId>com.genuitec.eclipse.gerrit.tools.parent</artifactId>
 	<version>${feature-version}</version>
 	<packaging>pom</packaging>
 	<properties>
@@ -11,7 +11,7 @@
 	</properties>
 	<organization>
 		<name>Genuitec LLC</name>
-		<url>https://github.com/genuitec/egit-tools</url>
+		<url>https://github.com/genuitec/gerrit-tools</url>
 	</organization>
 	<inceptionYear>2015</inceptionYear>
 
@@ -23,7 +23,8 @@
 		</license>
 	</licenses>
 	<modules>
-		<module>com.genuitec.eclipse.egit.tools</module>
+		<module>com.genuitec.eclipse.gerrit.tools</module>
+		<module>com.genuitec.eclipse.gerrit.tools.feature</module>
 	</modules>
 	<build>
 		<defaultGoal>clean install</defaultGoal>
@@ -178,9 +179,9 @@
 		</repository>
 	</repositories>
 	<scm>
-		<url>https://github.com/genuitec/egit-tools</url>
-		<connection>scm:git:https://github.com/genuitec/egit-tools.git</connection>
-		<developerConnection>scm:git:https://github.com/genuitec/egit-tools.git</developerConnection>
+		<url>https://github.com/genuitec/gerrit-tools</url>
+		<connection>scm:git:https://github.com/genuitec/gerrit-tools.git</connection>
+		<developerConnection>scm:git:https://github.com/genuitec/gerrit-tools.git</developerConnection>
 	</scm>
 	<!--
 	<profiles>
