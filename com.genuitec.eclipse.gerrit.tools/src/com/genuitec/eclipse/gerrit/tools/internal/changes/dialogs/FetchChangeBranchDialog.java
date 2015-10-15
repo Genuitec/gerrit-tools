@@ -10,6 +10,7 @@
  */
 package com.genuitec.eclipse.gerrit.tools.internal.changes.dialogs;
 
+import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.eclipse.mylyn.internal.gerrit.core.client.GerritClient;
 import org.eclipse.mylyn.internal.gerrit.core.client.GerritException;
 import org.eclipse.mylyn.internal.gerrit.core.client.data.GerritQueryResult;
 import org.eclipse.mylyn.internal.gerrit.core.client.rest.ChangeInfo;
+import org.eclipse.mylyn.internal.gerrit.core.client.rest.RevisionInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -62,6 +64,7 @@ public class FetchChangeBranchDialog extends SettingsDialog {
 	private Map<Integer, ChangeInfo> details;
 	private PatchSetListInit patchSetInitJob = new PatchSetListInit();
 	
+	@SuppressWarnings("unchecked")
 	public FetchChangeBranchDialog(Shell shell, Repository repository) {
 		super(shell, "Fetch change from Gerrit");
 		this.repository = repository;
@@ -69,7 +72,17 @@ public class FetchChangeBranchDialog extends SettingsDialog {
 		this.details = new HashMap<Integer, ChangeInfo>();
 		client = GerritUtils.getGerritClient(repository, SubMonitor.convert(null));
 		try {
-			changes = client.getRestClient().executeQuery(SubMonitor.convert(null), "status:open" + projectCondition); //$NON-NLS-1$
+			try {
+				changes = client.getRestClient().executeQuery(SubMonitor.convert(null), "status:open" + projectCondition); //$NON-NLS-1$
+			} catch (NoSuchMethodError t) {
+				try {
+					//workaround for Luna Mylyn Client
+					Method m = client.getClass().getMethod("executeQuery", IProgressMonitor.class, String.class); //$NON-NLS-1$
+					changes = (List<GerritQueryResult>) m.invoke(client, SubMonitor.convert(null), "status:open" + projectCondition); //$NON-NLS-1$
+				} catch (Exception e) {
+					throw new GerritException(e);
+				}
+			}
 		} catch (GerritException e) {
 			MessageDialog.openError(shell, "Error", "Cannot fetch list of changes from Gerrit. See Error Log for details");
 			throw new RuntimeException("Cannot fetch list of changes from Gerrit", e);
@@ -158,8 +171,13 @@ public class FetchChangeBranchDialog extends SettingsDialog {
 		String[] res = new String[changes.size()];
 		for (int i = 0; i < res.length; i++) {
 			GerritQueryResult qr = changes.get(i);
-			res[i] = MessageFormat.format("{0}: {1} [{2}]", //$NON-NLS-1$
-					Integer.toString(qr.getNumber()), qr.getSubject(), qr.getOwner().getName());
+			if (qr.getOwner().getName() != null) {
+				res[i] = MessageFormat.format("{0}: {1} [{2}]", //$NON-NLS-1$
+						Integer.toString(qr.getNumber()), qr.getSubject(), qr.getOwner().getName());
+			} else {
+				res[i] = MessageFormat.format("{0}: {1}", //$NON-NLS-1$
+						Integer.toString(qr.getNumber()), qr.getSubject());
+			}
 		}
 		return res;
 	}
@@ -232,8 +250,12 @@ public class FetchChangeBranchDialog extends SettingsDialog {
 		}
 		
 		private void fillCombo(ChangeInfo detail) {
-			int max = detail.getCurrentPatchSetId() != null ? 
-					detail.getCurrentPatchSetId().get() : 1;
+			int max = 1;
+			for (RevisionInfo ri: detail.getRevisions().values()) {
+				if (ri.getNumber() > max) {
+					max = ri.getNumber();
+				}
+			}
 			patchset.setItems(new String[] { Integer.toString(max) });
 			patchset.select(0);
 			setFinishEnabled(true);

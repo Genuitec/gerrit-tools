@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jgit.api.Git;
@@ -50,20 +51,24 @@ public class FetchChangeCommand extends AbstractHandler {
         }
         
         //configure branch creation
-        FetchChangeBranchDialog fetchChangeBranchDialog = new FetchChangeBranchDialog(shell, repository);
-        if (fetchChangeBranchDialog.open() != IDialogConstants.OK_ID) {
-            return null;
-        }
-        //perform branch operation
         try {
-            ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(shell);
-            final CreateChangeBranchOperation op = new CreateChangeBranchOperation(
-                progressDialog.getShell(), event, repository, fetchChangeBranchDialog.getSettings());
-            progressDialog.run(true, true, op);
-        } catch (InterruptedException e) {
-            //ignore
-        } catch (Exception e) {
-        	RepositoryUtils.handleException(e);
+	        FetchChangeBranchDialog fetchChangeBranchDialog = new FetchChangeBranchDialog(shell, repository);
+	        if (fetchChangeBranchDialog.open() != IDialogConstants.OK_ID) {
+	            return null;
+	        }
+	        //perform branch operation
+	        try {
+	            ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(shell);
+	            final CreateChangeBranchOperation op = new CreateChangeBranchOperation(
+	                progressDialog.getShell(), event, repository, fetchChangeBranchDialog.getSettings());
+	            progressDialog.run(true, true, op);
+	        } catch (InterruptedException e) {
+	            //ignore
+	        } catch (Exception e) {
+	        	RepositoryUtils.handleException(e);
+	        }
+        } catch (NoClassDefFoundError err) {
+        	MessageDialog.openWarning(shell, "Mylyn for Gerrit is not installer", "To be able to fetch a change from Gerrit, please install Mylyn for Gerrit plugin");
         }
         
         return null;
