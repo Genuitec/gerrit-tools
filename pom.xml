@@ -6,7 +6,7 @@
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho-version>0.22.0</tycho-version>
+		<tycho-version>0.23.0</tycho-version>
 		<feature-version>2.0.0-SNAPSHOT</feature-version>
 	</properties>
 	<organization>
