@@ -37,7 +37,7 @@ public class TagAndPushDialog extends SettingsDialog {
     List<Repository> repos = new ArrayList<Repository>();
     
     public TagAndPushDialog(Shell parentShell, List<Repository> repositories) {
-        super(parentShell, "Create Tag and push it");
+        super(parentShell, "Create and Push Tag");
         this.repos = repositories;
     }
 
@@ -64,8 +64,8 @@ public class TagAndPushDialog extends SettingsDialog {
     
     @Override
     protected void createDialogContents(Composite parent) {
-        createOptionTextEditor(parent, "Tag name:", TagAndPushHandler.PROP_TAG_NAME, "releases/11.x/11.5.0", false);
-        createOptionTextEditor(parent, "Tag message:", TagAndPushHandler.PROP_TAG_MESSAGE, "MyEclipse 2015 CI release", false);
+        createOptionTextEditor(parent, "Tag name:", TagAndPushHandler.PROP_TAG_NAME, "", false);
+        createOptionTextEditor(parent, "Tag message:", TagAndPushHandler.PROP_TAG_MESSAGE, "", false);
         createOptionCheckBox(parent, "Create tag", TagAndPushHandler.PROP_CREATE_TAG, true);
         createOptionCheckBox(parent, "Push tag", TagAndPushHandler.PROP_PUSH_TAG, true);
         

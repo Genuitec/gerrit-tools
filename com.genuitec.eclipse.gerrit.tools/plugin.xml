@@ -21,7 +21,7 @@
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.utils.commands.TagAndPushHandler"
             id="com.genuitec.eclipse.egit.tools.tagAndPush"
-            name="Create Tag and push it">
+            name="Create and Push Tag...">
       </command>
       <!-- feature branch management -->
       <command
@@ -32,7 +32,7 @@
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.fbranches.commands.SwitchToBranchCommand"
             id="com.genuitec.eclipse.egit.tools.switchToBranch"
-            name="Switch to branch">
+            name="Switch to Branch">
       	<commandParameter
              id="branch.ref"
              name="Branch"
@@ -46,7 +46,7 @@
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.fbranches.commands.MergeStableIntoCurrentBranchCommand"
             id="com.genuitec.eclipse.egit.tools.mergeStableIntoCurrent"
-            name="Merge stable into currect">
+            name="Merge Stable into Currect">
       	<commandParameter
              id="branch.ref"
              name="Stable Branch"
@@ -64,7 +64,7 @@
       <command
       		defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.fbranches.commands.EmptyHandler"
             id="com.genuitec.eclipse.egit.tools.switchAllBranches"
-            name="Switch all repositories to feature branch...">
+            name="Switch all Repositories to Feature Branch...">
       </command>
       <!-- changes management -->
       <command
@@ -75,7 +75,7 @@
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.changes.commands.SwitchToChangeBranchCommand"
             id="com.genuitec.eclipse.egit.tools.switchToChangeBranch"
-            name="Switch to change">
+            name="Switch to Change">
       	<commandParameter
              id="branch.ref"
              name="Branch"
@@ -97,7 +97,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?before=repo-0">
          <menu
-        		label="Switch to Stable Branch"
+        		label="Switch to Gerrit Stable Branch"
         		id="switch-to-stable"
            		icon="icons/branches.gif">
             <dynamic
@@ -107,17 +107,20 @@
             	<and>
 	            	<count value="+"/>
 	            	<iterate operator="and">
-	            		<or>
-	            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"/>
-	            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode"/>
-	            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.LocalNode"/>
-	            		</or>
+	            		<and>
+		            		<or>
+		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"/>
+		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode"/>
+		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.LocalNode"/>
+		            		</or>
+		            		<test property="GitRepository.hasGerritConfiguration"/>
+		            	</and>
 	            	</iterate>
 	            </and>
             </visibleWhen>
          </menu>
          <menu
-               label="Feature Branches"
+               label="Gerrit Feature Branches"
                id="me-feature-branches"
                icon="icons/feature-branches.gif">
         	<command 
@@ -137,7 +140,7 @@
 	        </menu>
             <separator name="feature-1" visible="true"/>
             <menu
-                  label="Update with changes from stable"
+                  label="Update with Changes from Stable"
                   id="update-with-stable"
                   icon="icons/merge-stable.gif">
             	<dynamic
@@ -159,19 +162,22 @@
             	<and>
 	            	<count value="+"/>
 	            	<iterate operator="and">
-	            		<or>
-	            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"/>
-	            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode"/>
-	            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.LocalNode"/>
-	            		</or>
+	            		<and>
+		            		<or>
+		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"/>
+		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode"/>
+		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.LocalNode"/>
+		            		</or>
+		            		<test property="GitRepository.hasGerritConfiguration"/>
+		            	</and>
 	            	</iterate>
 	            </and>
             </visibleWhen>
          </menu>
          <menu
-               label="Change Branches"
+               label="Gerrit Change Branches"
                id="me-gerrit-changes"
-               icon="icons/gerrit.gif">
+               icon="icons/gerrit-changes.png">
          	<command
                 commandId="com.genuitec.eclipse.egit.tools.newChangeBranch"
                 icon="icons/gerrit-new.gif">
@@ -201,11 +207,14 @@
             	<and>
 	            	<count value="1"/>
 	            	<iterate operator="and">
-	            		<or>
-	            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"/>
-	            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode"/>
-	            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.LocalNode"/>
-	            		</or>
+	            		<and>
+		            		<or>
+		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"/>
+		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode"/>
+		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.LocalNode"/>
+		            		</or>
+		            		<test property="GitRepository.hasGerritConfiguration"/>
+		            	</and>
 	            	</iterate>
 	            </and>
             </visibleWhen>
@@ -216,7 +225,8 @@
          <command
                commandId="com.genuitec.eclipse.egit.tools.tagAndPush"
                icon="icons/tag-and-push.gif"
-               style="push">
+               style="push"
+               label="Create and Push Tag...">
             <visibleWhen checkEnabled="false">
             	<iterate operator="and">
             		<instanceof value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"/>
@@ -234,13 +244,13 @@
                commandId="com.genuitec.eclipse.egit.tools.exportProjects"
                icon="icons/export-gps.gif"
                style="push"
-               tooltip="Export projects from Gerrit Project Set (*.gps file)">
+               tooltip="Export Projects from Gerrit Project Set (*.gps file)">
          </command>
          <command
                commandId="com.genuitec.eclipse.egit.tools.importProjects"
                icon="icons/import-gps.gif"
                style="pulldown"
-               tooltip="Import projects from Gerrit Project Set (*.gps file)">
+               tooltip="Import Projects from Gerrit Project Set (*.gps file)">
          </command>
       </menuContribution>
       <menuContribution
