@@ -11,7 +11,6 @@
 package com.genuitec.eclipse.gerrit.tools.internal.utils.commands;
 
 import java.lang.reflect.InvocationTargetException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
