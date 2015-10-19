@@ -50,10 +50,10 @@ public class SwitchToBranchCommand extends FeatureBranchCommand {
 	protected void execute(ExecutionEvent event, final Repository repository, final String branchRef)
 			throws ExecutionException {		
 		//check if local branch exists
+		final String branchName = branchRef.substring("refs/heads/".length()); //$NON-NLS-1$
 		try {
 			if (repository.getRef(branchRef) == null) {
 				//create local branch
-				String branchName = branchRef.substring("refs/heads/".length()); //$NON-NLS-1$
 				String remoteBranchRef = "refs/remotes/origin/" + branchName; //$NON-NLS-1$
 				Ref remoteRef = repository.getRef(remoteBranchRef);
 				if (remoteRef == null) {
@@ -79,9 +79,11 @@ public class SwitchToBranchCommand extends FeatureBranchCommand {
 					public void done(CheckoutResult result) {
 
 						if (result.getStatus() == CheckoutResult.Status.OK) {
-							String newUpstreamRef = branchRef + ":refs/for" + branchRef.substring(10); //$NON-NLS-1$
+							String newUpstreamRef = branchRef + ":refs/for" + branchName; //$NON-NLS-1$
 							repository.getConfig().setString("remote", "origin", "push",  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 									newUpstreamRef);
+							//ensure in rebase mode
+							repository.getConfig().setBoolean("branch", branchName, "rebase", true);  //$NON-NLS-1$//$NON-NLS-2$
 							try {
 								repository.getConfig().save();
 							} catch (IOException e) {

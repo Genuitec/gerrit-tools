@@ -49,12 +49,15 @@ public class SwitchToChangeBranchCommand extends AbstractHandler {
 						if (result.getStatus() == CheckoutResult.Status.OK) {
 							IPath path = new Path(branchRef);
 							String stableBranch = path.segment(3);
-							if (stableBranch.equals("features") && path.segmentCount() > 6) {
+							if (stableBranch.equals("features") && path.segmentCount() > 6) { //$NON-NLS-1$
 								stableBranch = path.removeFirstSegments(3).uptoSegment(3).toString();
 							}
 							String newUpstreamRef = branchRef + ":refs/for/" + stableBranch; //$NON-NLS-1$
 							repository.getConfig().setString("remote", "origin", "push",  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 									newUpstreamRef);
+							repository.getConfig().setBoolean("branch",  //$NON-NLS-1$
+									path.removeFirstSegments(2).removeTrailingSeparator().makeRelative().toString(), 
+									"rebase", true);  //$NON-NLS-1$
 							try {
 								repository.getConfig().save();
 							} catch (IOException e) {
