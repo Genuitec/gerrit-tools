@@ -152,7 +152,6 @@ public class MergeStableIntoCurrentBranchCommand extends FeatureBranchCommand {
 			final MergeOperation op = new MergeOperation(
 					repository, refName);
 			op.setFastForwardMode(FastForwardMode.FF);
-			op.setMessage(commitMessage);
 			
 			String jobname = NLS.bind(UIText.MergeAction_JobNameMerge, refName);
 			Job job = new WorkspaceJob(jobname) {
