@@ -79,7 +79,7 @@ public class SwitchToBranchCommand extends FeatureBranchCommand {
 					public void done(CheckoutResult result) {
 
 						if (result.getStatus() == CheckoutResult.Status.OK) {
-							String newUpstreamRef = branchRef + ":refs/for" + branchName; //$NON-NLS-1$
+							String newUpstreamRef = branchRef + ":refs/for/" + branchName; //$NON-NLS-1$
 							repository.getConfig().setString("remote", "origin", "push",  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 									newUpstreamRef);
 							//ensure in rebase mode
