@@ -139,7 +139,7 @@ public class ImportProjectsHandler extends AbstractHandler {
 				projectSet.add(prj.getName());
 			}
 
-			SubMonitor repoSetup = monitor.newChild(600, 0);
+			SubMonitor repoSetup = monitor.newChild(400, 0);
 			repoSetup.beginTask("Preparing git repositories...", file.getRepositoryConfigs().size()*20);
 			for (IGpsRepositoriesConfig config: file.getRepositoryConfigs()) {
 				config.performConfiguration(options, repoSetup.newChild(20, SubMonitor.SUPPRESS_BEGINTASK));
@@ -156,6 +156,7 @@ public class ImportProjectsHandler extends AbstractHandler {
 			//first pass is to check if everything is ok
 			boolean replaceAll = false;
 			boolean skipAll = false;
+			monitor.setWorkRemaining(file.getProjects().size()*10);
 			monitor = monitor.newChild(file.getProjects().size()*10, 0);
 			for (GpsProject gpsProject: file.getProjects()) {
 				
