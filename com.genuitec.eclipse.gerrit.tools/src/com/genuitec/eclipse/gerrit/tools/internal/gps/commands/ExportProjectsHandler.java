@@ -68,7 +68,12 @@ public class ExportProjectsHandler extends AbstractHandler {
 				if (f.isFile()) {
 					f.delete();
 				}
-				gpsFile.saveToStream(new FileOutputStream(selected, false));
+				FileOutputStream fos = new FileOutputStream(selected, false);
+				try {
+					gpsFile.saveToStream(fos);
+				} finally {
+					fos.close();
+				}
 			} catch (InterruptedException e) {
 				//ignore
 			} catch (Exception e) {

@@ -84,7 +84,12 @@ public class ImportProjectsHandler extends AbstractHandler {
         if (fileName != null) {
 	        GpsFile gpsFile = new GpsFile();
 	        try {
-				gpsFile.loadFromStream(new FileInputStream(fileName));
+	        	FileInputStream fis = new FileInputStream(fileName);
+	        	try {
+	        		gpsFile.loadFromStream(fis);
+	        	} finally {
+	        		fis.close();
+	        	}
 				
 				ImportProjectsDialog importDialog = new ImportProjectsDialog(shell, gpsFile);
 				if (importDialog.open() != IDialogConstants.OK_ID) {

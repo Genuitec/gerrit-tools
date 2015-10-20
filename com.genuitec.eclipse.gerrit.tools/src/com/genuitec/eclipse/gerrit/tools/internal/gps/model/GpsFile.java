@@ -77,12 +77,6 @@ public class GpsFile {
 			throw e;
 		} catch (Exception e) {
 			throw new GpsFileException("Error reading GPS file. See error log for details.", e);
-		} finally {
-			try {
-				stream.close();
-			} catch (IOException e) {
-				//ignore
-			}
 		}
 	}
 	
