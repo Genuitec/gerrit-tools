@@ -38,12 +38,17 @@ public class CreateFeatureBranchDialog extends StableBranchSelectionDialog {
 	protected IStatus validate(String property, Object value) {
 		if (property.equals(PROP_BRANCH_NAME)) {
 			String branchName = (String)value;
+			String refName = "refs/heads/features/" + userId + "/" + branchName; //$NON-NLS-1$ //$NON-NLS-2$
 			if (branchName.length() < 4) {
 				return createErrorStatus("Branch name must have at least 4 characters");
+			} else if (branchName.endsWith("/") || branchName.startsWith("/")) { //$NON-NLS-1$ //$NON-NLS-2$
+				return createErrorStatus("Branch name cannot start or end with ''/''");
+			} else if (!Repository.isValidRefName(refName)) {
+				return createErrorStatus("Branch name {0} is not allowed", branchName);
 			} else
 				try {
 					for (Repository repository: repositories) {
-						if (repository.getRef("refs/heads/features/" + userId + "/" + branchName) != null){
+						if (repository.getRef(refName) != null){
 							return createErrorStatus("You already have a feature branch with this name in repository {0}. Choose a different name", 
 									repository.getDirectory().getParentFile().getName());
 						}

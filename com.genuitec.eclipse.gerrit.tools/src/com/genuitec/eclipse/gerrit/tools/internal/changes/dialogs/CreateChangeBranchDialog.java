@@ -33,11 +33,16 @@ public class CreateChangeBranchDialog extends StableBranchSelectionDialog {
 	protected IStatus validate(String property, Object value) {
 		if (property.equals(PROP_CHANGE_BRANCH_NAME)) {
 			String branchName = (String)value;
+			String refName = "refs/heads/change/" + getSetting(PROP_STABLE_BRANCH) + "/" + branchName; //$NON-NLS-1$ //$NON-NLS-2$
 			if (branchName.length() < 4) {
 				return createErrorStatus("Branch name must have at least 4 characters");
+			} else if (branchName.endsWith("/") || branchName.startsWith("/")) { //$NON-NLS-1$ //$NON-NLS-2$
+				return createErrorStatus("Branch name cannot start or end with ''/''");
+			} else if (!Repository.isValidRefName(refName)) {
+				return createErrorStatus("Branch name {0} is not allowed", branchName);
 			} else
 				try {
-					if (repositories.get(0).getRef("refs/heads/change/" + getSetting(PROP_STABLE_BRANCH) + "/" + branchName) != null){
+					if (repositories.get(0).getRef(refName) != null){
 						return createErrorStatus("You already have a change branch with this name. Choose a different name.");
 					}
 				} catch (IOException e) {

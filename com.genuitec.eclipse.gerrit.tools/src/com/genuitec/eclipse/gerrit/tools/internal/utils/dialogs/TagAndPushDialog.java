@@ -50,11 +50,20 @@ public class TagAndPushDialog extends SettingsDialog {
     			return createErrorStatus("You must create or push tag(s)"); 
     		}
     	} else if (property.equals(TagAndPushHandler.PROP_TAG_NAME)) {
-    		if (((String)value).length() < 2) {
+    		String tagName = (String)value;
+    		if (tagName.length() < 2) {
     			return createErrorStatus("Tag name must be longer then 1 character");
     		}
+    		if (tagName.startsWith("refs/tags/")) { //$NON-NLS-1$
+    			return createErrorStatus("Do not prefix tag name with ''refs/tags/''");
+    		}
+    		if (tagName.startsWith("/") || tagName.endsWith("/")){ //$NON-NLS-1$ //$NON-NLS-2$
+    			return createErrorStatus("Tag name should not end or start with ''/''");
+    		}
+    		if (!Repository.isValidRefName("refs/tags/" + tagName)) { //$NON-NLS-1$
+    			return createErrorStatus("Tag name {0} is not allowed", tagName);
+    		}
     	} else if (property.equals(TagAndPushHandler.PROP_TAG_MESSAGE)) {
-
     		if (((String)value).length() <= 3) {
     			return createErrorStatus("Tag message must be longer then 3 characters");
     		}
