@@ -7,10 +7,10 @@ Bundle-Activator: com.genuitec.eclipse.gerrit.tools.GerritToolsPlugin
 Bundle-Vendor: GENUITEC
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.egit.core;bundle-version="[3.0.0,5.0.0)";visibility:=reexport,
- org.eclipse.egit.ui;bundle-version="[3.0.0,5.0.0)";visibility:=reexport,
+ org.eclipse.egit.core;bundle-version="[3.4.2,5.0.0)";visibility:=reexport,
+ org.eclipse.egit.ui;bundle-version="[3.4.2,5.0.0)";visibility:=reexport,
  org.eclipse.core.resources;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.jgit;bundle-version="[3.0.0,5.0.0)";visibility:=reexport,
+ org.eclipse.jgit;bundle-version="[3.4.2,5.0.0)";visibility:=reexport,
  org.eclipse.team.cvs.core;bundle-version="[3.3.0,4.0.0)";resolution:=optional,
  org.eclipse.team.cvs.ssh2;bundle-version="[3.2.0,4.0.0)";resolution:=optional,
  org.eclipse.team.cvs.ui;bundle-version="[3.3.0,4.0.0)";resolution:=optional,

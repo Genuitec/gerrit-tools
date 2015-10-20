@@ -12,11 +12,11 @@ package com.genuitec.eclipse.gerrit.tools.internal.gps.model;
 
 import static com.genuitec.eclipse.gerrit.tools.utils.XMLUtils.*;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -43,7 +43,7 @@ public class GpsGitRepositoryHandler implements IGpsRepositoryHandler {
 	public GpsGitRepositoryHandler(IProject project, GpsProject parent) throws 
 			Exception {
 		this.parent = parent;
-		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+		RepositoryMapping mapping = RepositoryMapping.getMapping((IResource)project);
 		if (mapping.getRepository().isBare()) {
 			throw new GpsFileException("Cannot export projects from bare repositories!");
 		}
