@@ -11,6 +11,8 @@
 package com.genuitec.eclipse.gerrit.tools.internal.changes.commands;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -31,11 +34,15 @@ import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.TagOpt;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.genuitec.eclipse.gerrit.tools.internal.changes.dialogs.FetchChangeBranchDialog;
+import com.genuitec.eclipse.gerrit.tools.utils.MessageLinkDialog;
 import com.genuitec.eclipse.gerrit.tools.utils.RepositoryUtils;
 
 @SuppressWarnings("restriction")
@@ -68,7 +75,20 @@ public class FetchChangeCommand extends AbstractHandler {
 	        	RepositoryUtils.handleException(e);
 	        }
         } catch (NoClassDefFoundError err) {
-        	MessageDialog.openWarning(shell, "Mylyn for Gerrit is not installer", "To be able to fetch a change from Gerrit, please install Mylyn for Gerrit plugin");
+        	MessageLinkDialog.openWarning(shell, 
+        			"Mylyn for Gerrit is not installed", 
+        			"To be able to fetch a change from Gerrit, please install Mylyn Gerrit connector. Detailed instructions can be found <a>here</a>.",
+        			new MessageLinkDialog.IMessageLinkDialogListener() {
+						@Override
+						public void linkSelected(SelectionEvent e) {
+							try {
+								PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(
+										new URL("https://github.com/Genuitec/gerrit-tools/wiki/Fetch-from-Gerrit-setup"));
+							} catch (Exception ex) {
+								RepositoryUtils.handleException(ex);
+							}
+						}
+					});
         }
         
         return null;
