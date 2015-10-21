@@ -4,7 +4,7 @@ Bundle-Name: Genuitec Gerrit Tools
 Bundle-SymbolicName: com.genuitec.eclipse.gerrit.tools;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: com.genuitec.eclipse.gerrit.tools.GerritToolsPlugin
-Bundle-Vendor: GENUITEC
+Bundle-Vendor: Genuitec, LLC
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.egit.core;bundle-version="[3.4.2,5.0.0)";visibility:=reexport,
