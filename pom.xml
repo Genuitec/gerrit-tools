@@ -120,6 +120,25 @@
 				<version>${tycho-version}</version>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jarsigner-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<id>sign</id>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<keystore>${keystore.path}</keystore>
+					<alias>${keystore.alias}</alias>
+					<storepass>${keystore.password}</storepass>
+					<keypass>${keystore.password}</keypass>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>com.mycila.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
 				<version>1.9.0</version>
