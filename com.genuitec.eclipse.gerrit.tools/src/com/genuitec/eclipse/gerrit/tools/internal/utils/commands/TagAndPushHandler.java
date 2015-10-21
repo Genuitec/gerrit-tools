@@ -57,7 +57,7 @@ public class TagAndPushHandler extends SafeCommandHandler {
     @Override
 	protected Object internalExecute(ExecutionEvent event) throws Exception {
         IStructuredSelection selection = (IStructuredSelection)HandlerUtil.getCurrentSelection(event);
-        Shell shell = HandlerUtil.getActiveShell(event);
+        final Shell shell = HandlerUtil.getActiveShell(event);
         
         List<Repository> repositories = new ArrayList<Repository>(); 
         
@@ -82,14 +82,18 @@ public class TagAndPushHandler extends SafeCommandHandler {
             shell.getDisplay().asyncExec(new Runnable() {
                 
                 public void run() {
-                    Policy.getStatusHandler().show(op.getResult(), "Results of the operation");
+                	if (op.getResult().getSeverity() >= IStatus.WARNING) {
+                		Policy.getStatusHandler().show(op.getResult(), "Results of the operation");
+                	} else {
+                		MessageDialog.openInformation(shell, "Create and Push Tag", "Repositories has been successfully tagged.");
+                	}
                 }
             });
         } catch (InterruptedException e) {
             //ignore
         } catch (Exception e) {
             GerritToolsPlugin.getDefault().getLog().log(new Status(IStatus.ERROR, GerritToolsPlugin.PLUGIN_ID, e.getLocalizedMessage(), e));
-            MessageDialog.openError(shell, "Import", e.getLocalizedMessage());
+            MessageDialog.openError(shell, "Create and Push Tag", e.getLocalizedMessage());
         }
         
         return null;
