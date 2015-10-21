@@ -13,9 +13,7 @@ package com.genuitec.eclipse.gerrit.tools.internal.changes.commands;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -30,12 +28,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.genuitec.eclipse.gerrit.tools.internal.changes.dialogs.CreateChangeBranchDialog;
+import com.genuitec.eclipse.gerrit.tools.internal.utils.commands.SafeCommandHandler;
 import com.genuitec.eclipse.gerrit.tools.utils.RepositoryUtils;
 
-public class NewChangeBranchCommand extends AbstractHandler {
+public class NewChangeBranchCommand extends SafeCommandHandler {
 	
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	protected Object internalExecute(ExecutionEvent event) throws Exception {
         Shell shell = HandlerUtil.getActiveShell(event);
         
         Repository repository = RepositoryUtils.getRepository(HandlerUtil.getCurrentSelection(event));
@@ -59,8 +58,6 @@ public class NewChangeBranchCommand extends AbstractHandler {
             progressDialog.run(true, true, op);
         } catch (InterruptedException e) {
             //ignore
-        } catch (Exception e) {
-        	RepositoryUtils.handleException(e);
         }
         
         return null;
