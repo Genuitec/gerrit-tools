@@ -113,7 +113,7 @@
 		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode"/>
 		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.LocalNode"/>
 		            		</or>
-		            		<test property="GitRepository.hasGerritConfiguration"/>
+		            		<test property="GitRepository.hasGerritConfiguration" forcePluginActivation="true"/>
 		            	</and>
 	            	</iterate>
 	            </and>
@@ -168,7 +168,7 @@
 		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode"/>
 		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.LocalNode"/>
 		            		</or>
-		            		<test property="GitRepository.hasGerritConfiguration"/>
+		            		<test property="GitRepository.hasGerritConfiguration" forcePluginActivation="true"/>
 		            	</and>
 	            	</iterate>
 	            </and>
@@ -213,7 +213,7 @@
 		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.BranchesNode"/>
 		            			<instanceof value="org.eclipse.egit.ui.internal.repository.tree.LocalNode"/>
 		            		</or>
-		            		<test property="GitRepository.hasGerritConfiguration"/>
+		            		<test property="GitRepository.hasGerritConfiguration" forcePluginActivation="true"/>
 		            	</and>
 	            	</iterate>
 	            </and>
