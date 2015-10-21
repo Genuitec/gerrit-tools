@@ -16,9 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -47,7 +45,7 @@ import com.genuitec.eclipse.gerrit.tools.GerritToolsPlugin;
 import com.genuitec.eclipse.gerrit.tools.internal.utils.dialogs.TagAndPushDialog;
 
 @SuppressWarnings("restriction")
-public class TagAndPushHandler extends AbstractHandler {
+public class TagAndPushHandler extends SafeCommandHandler {
 
     public static final String PROP_TAG_NAME = "tag.name";
     public static final String PROP_TAG_MESSAGE = "tag.message";
@@ -55,8 +53,9 @@ public class TagAndPushHandler extends AbstractHandler {
     public static final String PROP_PUSH_TAG = "push.tag";
     
     private static IWorkspace workspace = ResourcesPlugin.getWorkspace();
-    
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+
+    @Override
+	protected Object internalExecute(ExecutionEvent event) throws Exception {
         IStructuredSelection selection = (IStructuredSelection)HandlerUtil.getCurrentSelection(event);
         Shell shell = HandlerUtil.getActiveShell(event);
         

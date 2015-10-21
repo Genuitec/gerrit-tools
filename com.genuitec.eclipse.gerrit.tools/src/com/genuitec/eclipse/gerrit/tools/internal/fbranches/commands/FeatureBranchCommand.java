@@ -12,17 +12,17 @@ package com.genuitec.eclipse.gerrit.tools.internal.fbranches.commands;
 
 import java.util.List;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import com.genuitec.eclipse.gerrit.tools.internal.utils.commands.SafeCommandHandler;
 import com.genuitec.eclipse.gerrit.tools.utils.RepositoryUtils;
 
-public abstract class FeatureBranchCommand extends AbstractHandler {
+public abstract class FeatureBranchCommand extends SafeCommandHandler {
 
-	public final Object execute(ExecutionEvent event) throws ExecutionException {
+	protected final Object internalExecute(ExecutionEvent event) throws Exception {
 		List<Repository> repos = null;
 		if (!Boolean.parseBoolean(event.getParameter("all.repos"))) { //$NON-NLS-1$
 			repos = RepositoryUtils.getRepositories(

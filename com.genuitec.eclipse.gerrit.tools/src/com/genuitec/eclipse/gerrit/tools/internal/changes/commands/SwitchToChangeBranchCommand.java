@@ -12,22 +12,22 @@ package com.genuitec.eclipse.gerrit.tools.internal.changes.commands;
 
 import java.io.IOException;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import com.genuitec.eclipse.gerrit.tools.internal.utils.commands.SafeCommandHandler;
 import com.genuitec.eclipse.gerrit.tools.utils.RepositoryUtils;
 import com.genuitec.org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import com.genuitec.org.eclipse.egit.ui.internal.branch.BranchOperationUI.DoneCallback;
 
-public class SwitchToChangeBranchCommand extends AbstractHandler {
+public class SwitchToChangeBranchCommand extends SafeCommandHandler {
 
-	public Object execute(final ExecutionEvent event) throws ExecutionException {
+	@Override
+	protected Object internalExecute(ExecutionEvent event) throws Exception {
 		final Repository repository = RepositoryUtils.getRepository(HandlerUtil.getCurrentSelection(event));
 		if (repository == null) {
 			return null;

@@ -11,21 +11,16 @@
 package com.genuitec.eclipse.gerrit.tools.internal.changes.commands;
 
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jgit.api.Git;
@@ -37,19 +32,19 @@ import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.genuitec.eclipse.gerrit.tools.internal.changes.dialogs.FetchChangeBranchDialog;
+import com.genuitec.eclipse.gerrit.tools.internal.utils.commands.SafeCommandHandler;
 import com.genuitec.eclipse.gerrit.tools.utils.MessageLinkDialog;
 import com.genuitec.eclipse.gerrit.tools.utils.RepositoryUtils;
 
 @SuppressWarnings("restriction")
-public class FetchChangeCommand extends AbstractHandler {
+public class FetchChangeCommand extends SafeCommandHandler {
 
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	protected Object internalExecute(ExecutionEvent event) throws Exception {
         Shell shell = HandlerUtil.getActiveShell(event);
         
         Repository repository = RepositoryUtils.getRepository(HandlerUtil.getCurrentSelection(event));
@@ -71,8 +66,6 @@ public class FetchChangeCommand extends AbstractHandler {
 	            progressDialog.run(true, true, op);
 	        } catch (InterruptedException e) {
 	            //ignore
-	        } catch (Exception e) {
-	        	RepositoryUtils.handleException(e);
 	        }
         } catch (NoClassDefFoundError err) {
         	MessageLinkDialog.openWarning(shell, 

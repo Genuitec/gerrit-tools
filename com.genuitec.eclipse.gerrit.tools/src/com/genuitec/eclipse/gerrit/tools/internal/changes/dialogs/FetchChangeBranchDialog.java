@@ -18,17 +18,21 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.mylyn.internal.gerrit.core.client.GerritClient;
 import org.eclipse.mylyn.internal.gerrit.core.client.GerritException;
+import org.eclipse.mylyn.internal.gerrit.core.client.GerritLoginException;
 import org.eclipse.mylyn.internal.gerrit.core.client.data.GerritQueryResult;
 import org.eclipse.mylyn.internal.gerrit.core.client.rest.ChangeInfo;
 import org.eclipse.mylyn.internal.gerrit.core.client.rest.RevisionInfo;
+import org.eclipse.mylyn.tasks.ui.TasksUiUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -71,21 +75,32 @@ public class FetchChangeBranchDialog extends SettingsDialog {
 		this.projectCondition = " project:" + GerritUtils.getGerritProjectName(repository); //$NON-NLS-1$
 		this.details = new HashMap<Integer, ChangeInfo>();
 		client = GerritUtils.getGerritClient(repository, SubMonitor.convert(null));
-		try {
+		boolean retry = true;
+		while (retry) {
+			retry = false;
 			try {
-				changes = client.getRestClient().executeQuery(SubMonitor.convert(null), "status:open" + projectCondition); //$NON-NLS-1$
-			} catch (NoSuchMethodError t) {
 				try {
-					//workaround for Luna Mylyn Client
-					Method m = client.getClass().getMethod("executeQuery", IProgressMonitor.class, String.class); //$NON-NLS-1$
-					changes = (List<GerritQueryResult>) m.invoke(client, SubMonitor.convert(null), "status:open" + projectCondition); //$NON-NLS-1$
-				} catch (Exception e) {
-					throw new GerritException(e);
+					changes = client.getRestClient().executeQuery(SubMonitor.convert(null), "status:open" + projectCondition); //$NON-NLS-1$
+				} catch (NoSuchMethodError t) {
+					try {
+						//workaround for Luna Mylyn Client
+						Method m = client.getClass().getMethod("executeQuery", IProgressMonitor.class, String.class); //$NON-NLS-1$
+						changes = (List<GerritQueryResult>) m.invoke(client, SubMonitor.convert(null), "status:open" + projectCondition); //$NON-NLS-1$
+					} catch (Exception e) {
+						throw new GerritException(e);
+					}
 				}
+			} catch (GerritLoginException e) {
+				MessageDialog.openError(shell, "Error", "Cannot login to Gerrit. Please correct your Gerrit setup.");
+				if (TasksUiUtil.openEditRepositoryWizard(client.getRepository()) == Window.OK) {
+					retry = true;
+				} else {
+					throw new OperationCanceledException();
+				}
+			} catch (GerritException e) {
+				MessageDialog.openError(shell, "Error", "Cannot fetch list of changes from Gerrit. See Error Log for details");
+				throw new RuntimeException("Cannot fetch list of changes from Gerrit", e);
 			}
-		} catch (GerritException e) {
-			MessageDialog.openError(shell, "Error", "Cannot fetch list of changes from Gerrit. See Error Log for details");
-			throw new RuntimeException("Cannot fetch list of changes from Gerrit", e);
 		}
 		for (GerritQueryResult res: changes) {
 			new DetailsFetchJob(res.getNumber()).schedule();

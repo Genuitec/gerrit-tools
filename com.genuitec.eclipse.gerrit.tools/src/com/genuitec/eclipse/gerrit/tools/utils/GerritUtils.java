@@ -82,6 +82,7 @@ public class GerritUtils {
 	}
 	
 	public static String getGerritURL(Repository repository) {
+		String best = null;
 		try {
 			RemoteConfig config = new RemoteConfig(repository.getConfig(),
 					"origin"); //$NON-NLS-1$
@@ -90,15 +91,16 @@ public class GerritUtils {
 			urls.addAll(config.getURIs());
 			
 			for (URIish uri: urls) {
+				best = "https://" + uri.getHost(); //$NON-NLS-1$
 				if (uri.getPort() == 29418) { //Gerrit refspec
-					return "https://" + uri.getHost(); //$NON-NLS-1$
+					return best;
 				}
 				break;
 			}
 		} catch (Exception e) {
 			GerritToolsPlugin.getDefault().log(e);
 		}
-		return null;
+		return best;
 	}
 	
 	//, final String defaultUser
@@ -150,6 +152,16 @@ public class GerritUtils {
 			if (repo.getUrl().equals(gerritURL)) {
 				client = (GerritClient) connector.getReviewClient(repo);
 				break;
+			}
+		}
+		
+		if (client == null) {
+			//support weird repo setups
+			for (TaskRepository repo: repos) {
+				if (repo.getUrl().startsWith(gerritURL)) {
+					client = (GerritClient) connector.getReviewClient(repo);
+					break;
+				}
 			}
 		}
 		
