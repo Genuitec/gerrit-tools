@@ -68,7 +68,7 @@ public class UseGerritToolsWarningCommand extends SafeCommandHandler {
 						.hint(convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH),
 								SWT.DEFAULT).applyTo(link);
 		        
-				link.setText("Gerrit Tools provides improved experience when pushing and fetching from Gerrit. <a>Learn more about using Gerrit Tooling.</a>\n\nDo you want to continue using standard EGit action?");
+				link.setText("Gerrit Tools provides an improved experience when pushing and fetching from Gerrit. <a>Learn more about using Gerrit Tools.</a>\n\nContinue to the standard EGit action?");
 				
 				link.addSelectionListener(new SelectionAdapter() {
 					@Override
