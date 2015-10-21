@@ -5,7 +5,7 @@
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.gps.commands.ImportProjectsHandler"
-            id="com.genuitec.eclipse.egit.tools.importProjects"
+            id="com.genuitec.eclipse.gerrit.tools.importProjects"
             name="Import Gerrit Project Set">
          <commandParameter
                id="file"
@@ -15,23 +15,23 @@
       </command>
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.gps.commands.ExportProjectsHandler"
-            id="com.genuitec.eclipse.egit.tools.exportProjects"
+            id="com.genuitec.eclipse.gerrit.tools.exportProjects"
             name="Export Gerrit Project Set">
       </command>
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.utils.commands.TagAndPushHandler"
-            id="com.genuitec.eclipse.egit.tools.tagAndPush"
+            id="com.genuitec.eclipse.gerrit.tools.tagAndPush"
             name="Create and Push Tag...">
       </command>
       <!-- feature branch management -->
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.fbranches.commands.CreateFeatureBranchCommand"
-            id="com.genuitec.eclipse.egit.tools.newFeatureBranch"
+            id="com.genuitec.eclipse.gerrit.tools.newFeatureBranch"
             name="New Feature Branch...">
       </command>
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.fbranches.commands.SwitchToBranchCommand"
-            id="com.genuitec.eclipse.egit.tools.switchToBranch"
+            id="com.genuitec.eclipse.gerrit.tools.switchToBranch"
             name="Switch to Branch">
       	<commandParameter
              id="branch.ref"
@@ -45,7 +45,7 @@
       </command>
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.fbranches.commands.MergeStableIntoCurrentBranchCommand"
-            id="com.genuitec.eclipse.egit.tools.mergeStableIntoCurrent"
+            id="com.genuitec.eclipse.gerrit.tools.mergeStableIntoCurrent"
             name="Merge Stable into Currect">
       	<commandParameter
              id="branch.ref"
@@ -54,7 +54,7 @@
       </command>
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.fbranches.commands.DeleteFeatureBranchCommand"
-            id="com.genuitec.eclipse.egit.tools.deleteFeatureBranch"
+            id="com.genuitec.eclipse.gerrit.tools.deleteFeatureBranch"
             name="Delete Feature Branch...">
       	<commandParameter
              id="branch.ref"
@@ -63,18 +63,18 @@
       </command>
       <command
       		defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.fbranches.commands.EmptyHandler"
-            id="com.genuitec.eclipse.egit.tools.switchAllBranches"
+            id="com.genuitec.eclipse.gerrit.tools.switchAllBranches"
             name="Switch all Repositories to Feature Branch...">
       </command>
       <!-- changes management -->
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.changes.commands.NewChangeBranchCommand"
-            id="com.genuitec.eclipse.egit.tools.newChangeBranch"
+            id="com.genuitec.eclipse.gerrit.tools.newChangeBranch"
             name="New Change Branch...">
       </command>
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.changes.commands.SwitchToChangeBranchCommand"
-            id="com.genuitec.eclipse.egit.tools.switchToChangeBranch"
+            id="com.genuitec.eclipse.gerrit.tools.switchToChangeBranch"
             name="Switch to Change">
       	<commandParameter
              id="branch.ref"
@@ -83,12 +83,12 @@
       </command>
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.changes.commands.FetchChangeCommand"
-            id="com.genuitec.eclipse.egit.tools.fetchChange"
+            id="com.genuitec.eclipse.gerrit.tools.fetchChange"
             name="Fetch from Gerrit...">
       </command>
       <command
             defaultHandler="com.genuitec.eclipse.gerrit.tools.internal.changes.commands.CleanupChangesCommand"
-            id="com.genuitec.eclipse.egit.tools.cleanupChanges"
+            id="com.genuitec.eclipse.gerrit.tools.cleanupChanges"
             name="Cleanup...">
       </command>
    </extension>
@@ -124,7 +124,7 @@
                id="me-feature-branches"
                icon="icons/feature-branches.gif">
         	<command 
-        			commandId="com.genuitec.eclipse.egit.tools.newFeatureBranch"
+        			commandId="com.genuitec.eclipse.gerrit.tools.newFeatureBranch"
         			icon="icons/feature-branch-new.gif"/>
             <separator name="feature-0" visible="true"/>
         	<menu
@@ -179,11 +179,11 @@
                id="me-gerrit-changes"
                icon="icons/gerrit-changes.png">
          	<command
-                commandId="com.genuitec.eclipse.egit.tools.newChangeBranch"
+                commandId="com.genuitec.eclipse.gerrit.tools.newChangeBranch"
                 icon="icons/gerrit-new.gif">
          	</command>
          	<command
-                commandId="com.genuitec.eclipse.egit.tools.fetchChange"
+                commandId="com.genuitec.eclipse.gerrit.tools.fetchChange"
                 icon="icons/gerrit-fetch.gif">
          	</command>
          	<separator
@@ -200,7 +200,7 @@
 	        </menu>
 	        <separator name="gerrit-cleanup" visible="true"/>
             <command
-                  commandId="com.genuitec.eclipse.egit.tools.cleanupChanges"
+                  commandId="com.genuitec.eclipse.gerrit.tools.cleanupChanges"
                   icon="icons/gerrit-cleanup.gif">
             </command>
             <visibleWhen checkEnabled="false">
@@ -223,7 +223,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView?after=org.eclipse.egit.ui.team.Pull">
          <command
-               commandId="com.genuitec.eclipse.egit.tools.tagAndPush"
+               commandId="com.genuitec.eclipse.gerrit.tools.tagAndPush"
                icon="icons/tag-and-push.gif"
                style="push"
                label="Create and Push Tag...">
@@ -238,16 +238,16 @@
             allPopups="false"
             locationURI="toolbar:org.eclipse.egit.ui.RepositoriesView?after=org.eclipse.egit.ui.RepositoriesViewCreateRepository">
          <separator
-               name="com.genuitec.eclipse.egit.tools.separator" visible="true">
+               name="com.genuitec.eclipse.gerrit.tools.separator" visible="true">
          </separator>
          <command
-               commandId="com.genuitec.eclipse.egit.tools.exportProjects"
+               commandId="com.genuitec.eclipse.gerrit.tools.exportProjects"
                icon="icons/export-gps.gif"
                style="push"
                tooltip="Export Projects from Gerrit Project Set (*.gps file)">
          </command>
          <command
-               commandId="com.genuitec.eclipse.egit.tools.importProjects"
+               commandId="com.genuitec.eclipse.gerrit.tools.importProjects"
                icon="icons/import-gps.gif"
                style="pulldown"
                tooltip="Import Projects from Gerrit Project Set (*.gps file)">
@@ -257,16 +257,16 @@
             allPopups="false"
             locationURI="toolbar:org.eclipse.team.ccvs.ui.RepositoriesView">
          <separator
-               name="com.genuitec.eclipse.egit.tools.separator" visible="true">
+               name="com.genuitec.eclipse.gerrit.tools.separator" visible="true">
          </separator>
          <command
-               commandId="com.genuitec.eclipse.egit.tools.exportProjects"
+               commandId="com.genuitec.eclipse.gerrit.tools.exportProjects"
                icon="icons/export-gps.gif"
                style="push"
                tooltip="Export projects from Gerrit Project Set (*.gps file)">
          </command>
          <command
-               commandId="com.genuitec.eclipse.egit.tools.importProjects"
+               commandId="com.genuitec.eclipse.gerrit.tools.importProjects"
                icon="icons/import-gps.gif"
                style="push"
                tooltip="Import projects from Gerrit Project Set (*.gps file)">
@@ -274,10 +274,10 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="menu:com.genuitec.eclipse.egit.tools.importProjects">
+            locationURI="menu:com.genuitec.eclipse.gerrit.tools.importProjects">
          <dynamic
                class="com.genuitec.eclipse.gerrit.tools.internal.gps.commands.QuickGpsImportCommandsProvider"
-               id="com.genuitec.eclipse.egit.tools.quickImportDyn">
+               id="com.genuitec.eclipse.gerrit.tools.quickImportDyn">
          </dynamic>
       </menuContribution>
    </extension>

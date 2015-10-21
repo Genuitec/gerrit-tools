@@ -123,8 +123,8 @@ public class ChangesActionsProvider extends CompoundContributionItem implements 
 			for (String change: changes) {
 				CommandContributionItemParameter parameter = new CommandContributionItemParameter(
 						serviceLocator, 
-						"com.genuitec.eclipse.egit.tools.switchToChangeBranch." + change, 
-						"com.genuitec.eclipse.egit.tools.switchToChangeBranch", SWT.PUSH);
+						"com.genuitec.eclipse.gerrit.tools.switchToChangeBranch." + change, 
+						"com.genuitec.eclipse.gerrit.tools.switchToChangeBranch", SWT.PUSH);
 				String branchRef = "refs/heads/changes/" + stable + "/" + change;
 				parameter.parameters = Collections.singletonMap("branch.ref", branchRef);
 				parameter.label = change.replace('(', '[').replace(')', ']').replace('_', ' ');

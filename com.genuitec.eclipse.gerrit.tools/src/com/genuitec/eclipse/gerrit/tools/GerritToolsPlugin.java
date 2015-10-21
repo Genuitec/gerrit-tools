@@ -21,7 +21,7 @@ import com.genuitec.eclipse.gerrit.tools.utils.AbstractGenuitecUIPlugin;
 public class GerritToolsPlugin extends AbstractGenuitecUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "com.genuitec.eclipse.egit"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "com.genuitec.eclipse.gerrit.tools"; //$NON-NLS-1$
 
 	// The shared instance
 	private static GerritToolsPlugin plugin;

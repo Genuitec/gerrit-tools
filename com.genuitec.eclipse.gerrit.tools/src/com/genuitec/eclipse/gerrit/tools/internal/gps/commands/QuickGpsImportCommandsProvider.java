@@ -53,8 +53,8 @@ public class QuickGpsImportCommandsProvider extends CompoundContributionItem imp
 		IContributionItem[] result = new IContributionItem[files.length];
 		for (int i = 0; i < result.length; i++) {
 			CommandContributionItemParameter parameter = new CommandContributionItemParameter(
-					serviceLocator, "com.genuitec.eclipse.egit.tools.quickImportProjects." + i,  //$NON-NLS-1$
-					"com.genuitec.eclipse.egit.tools.importProjects", SWT.PUSH); //$NON-NLS-1$
+					serviceLocator, "com.genuitec.eclipse.gerrit.tools.quickImportProjects." + i,  //$NON-NLS-1$
+					"com.genuitec.eclipse.gerrit.tools.importProjects", SWT.PUSH); //$NON-NLS-1$
 			parameter.parameters = Collections.singletonMap("file", files[i].toString()); //$NON-NLS-1$
 			parameter.label = files[i].getName();
 			result[i] = new CommandContributionItem(parameter);

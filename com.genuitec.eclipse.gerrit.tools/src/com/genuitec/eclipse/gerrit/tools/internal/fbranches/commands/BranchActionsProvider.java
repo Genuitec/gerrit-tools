@@ -74,9 +74,9 @@ public class BranchActionsProvider extends CompoundContributionItem implements I
 		String cmdId;
 		int mode = 0;
 		if (typeId.equals("switch.branch.feature.others")) {
-			return getOthersFeatureBranchesItems(repositories, "com.genuitec.eclipse.egit.tools.switchToBranch");
+			return getOthersFeatureBranchesItems(repositories, "com.genuitec.eclipse.gerrit.tools.switchToBranch");
 		} else if (typeId.startsWith("switch.branch.")) {
-			cmdId = "com.genuitec.eclipse.egit.tools.switchToBranch";
+			cmdId = "com.genuitec.eclipse.gerrit.tools.switchToBranch";
 			if (typeId.equals("switch.branch.stable")) {
 				mode |= MODE_STABLE;
 			} else if (typeId.equals("switch.branch.feature.user")) {
@@ -85,12 +85,12 @@ public class BranchActionsProvider extends CompoundContributionItem implements I
 				throw new RuntimeException("Unknown command type: " + typeId);
 			}
 		} else if (typeId.equals("merge.branch.stable")) { //$NON-NLS-1$
-			cmdId = "com.genuitec.eclipse.egit.tools.mergeStableIntoCurrent";
+			cmdId = "com.genuitec.eclipse.gerrit.tools.mergeStableIntoCurrent";
 			mode |= MODE_STABLE;
 		} else if (typeId.equals("delete.branch.feature.others")) {
-			return getOthersFeatureBranchesItems(repositories, "com.genuitec.eclipse.egit.tools.deleteFeatureBranch");
+			return getOthersFeatureBranchesItems(repositories, "com.genuitec.eclipse.gerrit.tools.deleteFeatureBranch");
 		} else if (typeId.equals("delete.branch.feature.user")) { //$NON-NLS-1$
-			cmdId = "com.genuitec.eclipse.egit.tools.deleteFeatureBranch";
+			cmdId = "com.genuitec.eclipse.gerrit.tools.deleteFeatureBranch";
 			mode |= MODE_FEATURE_USER;
 		} else {
 			throw new RuntimeException("Unknown command type: " + typeId);
