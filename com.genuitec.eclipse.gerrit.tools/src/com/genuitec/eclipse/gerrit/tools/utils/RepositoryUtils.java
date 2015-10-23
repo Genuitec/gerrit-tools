@@ -126,7 +126,10 @@ public class RepositoryUtils {
 				return email.substring(0, ind);
 			}
 		}
-		return null;
+		String username = SystemReader.getInstance().getProperty(Constants.OS_USER_NAME_KEY);
+		if (username == null)
+			username = Constants.UNKNOWN_USER_DEFAULT;
+		return username;
 	}
 	
 	public static Repository getRepository(ISelection selection) {
