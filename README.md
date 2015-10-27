@@ -1,13 +1,15 @@
 Gerrit Workflow for Eclipse
 ============
 
-[![Eclipse install](https://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2456312)
+[![Eclipse install](https://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2583696)
+
+![Gerrit Workflow Branching](https://resources.cloud.genuitec.com/wp-content/uploads/2015/10/Gerrit-Branching1.png)
 
 ##Ready to power up your development workflow?
 
 |Switch to better tooling | Use Gerrit Workflow | Continuously Deliver|
 |-------|----|----|
-|Our Webclipse plugin gives you an easy way to improve your experience with Gerrit in Eclipse. Gerrit Workflow for Eclipse is always free with Webclipse, so why not try it today?<br/><a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2456312" class="drag" title="Drag to your running Eclipse workspace to install Webclipse"><img src="https://marketplace.eclipse.org/sites/all/themes/solstice/_themes/solstice_marketplace/public/images/btn-install.png" alt="Drag to your running Eclipse workspace to install Webclipse" /></a><br/>Gerrit Workflow for Eclipse is also available in <a href="https://www.genuitec.com/products/myeclipse/download/"> MyEclipse.|Gerrit Workflow for Eclipse assists you in implementing Gerrit workflow with a powerful combination of code review, change separation and automated or manual testing. Now chances of getting regressions or incomplete features into your stable branch are minimal.|Don’t let your customers wait for features and bug fixes. With Gerrit Workflow only reviewed and verified changes make it to the stable branch. No more holding up a release while you wait for incomplete or buggy features.|
+|Our Webclipse plugin gives you an easy way to improve your experience with Gerrit in Eclipse. Gerrit Workflow for Eclipse is always free with Webclipse, so why not try it today?<br/><a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2583696" class="drag" title="Drag to your running Eclipse workspace to install Webclipse"><img src="https://marketplace.eclipse.org/sites/all/themes/solstice/_themes/solstice_marketplace/public/images/btn-install.png" alt="Drag to your running Eclipse workspace to install Webclipse" /></a><br/>Gerrit Workflow for Eclipse is also available in <a href="https://www.genuitec.com/products/myeclipse/download/"> MyEclipse.|Gerrit Workflow for Eclipse assists you in implementing Gerrit workflow with a powerful combination of code review, change separation and automated or manual testing. Now chances of getting regressions or incomplete features into your stable branch are minimal.|Don’t let your customers wait for features and bug fixes. With Gerrit Workflow only reviewed and verified changes make it to the stable branch. No more holding up a release while you wait for incomplete or buggy features.|
 
 ![Gerrit Workflow](https://resources.cloud.genuitec.com/wp-content/uploads/2015/10/Gerrit-Workflow-for-Continuos-Delivery.png)
 
