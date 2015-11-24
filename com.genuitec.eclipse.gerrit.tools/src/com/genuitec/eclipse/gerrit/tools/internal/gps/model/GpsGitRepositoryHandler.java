@@ -12,6 +12,7 @@ package com.genuitec.eclipse.gerrit.tools.internal.gps.model;
 
 import static com.genuitec.eclipse.gerrit.tools.utils.XMLUtils.*;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.eclipse.core.resources.IProject;
@@ -94,9 +95,13 @@ public class GpsGitRepositoryHandler implements IGpsRepositoryHandler {
 		if (monitor.isCanceled()) return null;
 		
 		//connect the project with repository
-		final ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
-				project, getRepository().getDirectory());
-		connectProviderOperation.execute(monitor.newChild(1));
+		try {
+			final ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
+					project, getRepository().getDirectory().getCanonicalFile());
+			connectProviderOperation.execute(monitor.newChild(1));
+		} catch (IOException e) {
+			throw new CoreException(new Status(IStatus.ERROR, GerritToolsPlugin.PLUGIN_ID, e.getMessage(), e));
+		}
 		if (monitor.isCanceled()) return null;
 		
 		return project;
