@@ -120,25 +120,6 @@
 				<version>${tycho-version}</version>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jarsigner-plugin</artifactId>
-				<version>1.4</version>
-				<executions>
-					<execution>
-						<id>sign</id>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<keystore>${keystore.path}</keystore>
-					<alias>${keystore.alias}</alias>
-					<storepass>${keystore.password}</storepass>
-					<keypass>${keystore.password}</keypass>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>com.mycila.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
 				<version>1.9.0</version>
@@ -150,15 +131,6 @@
 					</includes>
 				</configuration>
 			</plugin>
-			<!--
-			<plugin>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<releaseProfiles>lax</releaseProfiles>
-				</configuration>
-			</plugin>
-			-->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-compiler-plugin</artifactId>
@@ -202,23 +174,35 @@
 		<connection>scm:git:https://github.com/genuitec/gerrit-tools.git</connection>
 		<developerConnection>scm:git:https://github.com/genuitec/gerrit-tools.git</developerConnection>
 	</scm>
-	<!--
 	<profiles>
 		<profile>
-			<id>lax</id>
+			<id>sing-jars</id>
+			<activation>
+				<property><name>keystore.path</name></property>
+			</activation>
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>org.eclipse.tycho</groupId>
-						<artifactId>tycho-packaging-plugin</artifactId>
-						<version>${tycho-version}</version>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jarsigner-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
 						<configuration>
-							<strictVersions>false</strictVersions>
+							<keystore>${keystore.path}</keystore>
+							<alias>Genuitec</alias>
+							<storepass>${keystore.password}</storepass>
+							<keypass>${keystore.password}</keypass>
 						</configuration>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
 	</profiles>
-	-->
 </project>
