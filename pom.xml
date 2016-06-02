@@ -155,7 +155,7 @@
 		<repository>
 			<id>mars</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/mars</url>
+			<url>http://download.eclipse.org/releases/mars/201506241002/</url>
 		</repository>
 		<repository>
 			<id>orbit</id>
