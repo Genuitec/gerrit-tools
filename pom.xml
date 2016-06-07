@@ -198,6 +198,7 @@
 							<alias>Genuitec</alias>
 							<storepass>${keystore.password}</storepass>
 							<keypass>${keystore.password}</keypass>
+							<tsa>http://tsa.starfieldtech.com/</tsa>
 						</configuration>
 					</plugin>
 				</plugins>
