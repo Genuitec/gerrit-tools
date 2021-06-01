@@ -53,9 +53,9 @@ public class DeleteFeatureBranchCommand extends FeatureBranchCommand {
 		for (Repository repo: repositories) {
 			try {
 				if (//local
-						repo.getRef(branchRef) != null ||
+						repo.findRef(branchRef) != null ||
 						//or remote
-						repo.getRef("refs/remotes/origin/" + branchRef.substring("refs/heads/".length())) != null) {
+						repo.findRef("refs/remotes/origin/" + branchRef.substring("refs/heads/".length())) != null) {
 					execute(shell, repo, branchRef);
 				}
 			} catch (IOException e) {
@@ -69,7 +69,7 @@ public class DeleteFeatureBranchCommand extends FeatureBranchCommand {
 			throws ExecutionException {
 		Ref branch;
 		try {
-			branch = repository.getRef(branchRef);
+			branch = repository.findRef(branchRef);
 		} catch (IOException e) {
 			throw new ExecutionException(e.getLocalizedMessage(), e);
 		}

@@ -42,7 +42,7 @@ public class CreateChangeBranchDialog extends StableBranchSelectionDialog {
 				return createErrorStatus("Branch name {0} is not allowed", branchName);
 			} else
 				try {
-					if (repositories.get(0).getRef(refName) != null){
+					if (repositories.get(0).findRef(refName) != null){
 						return createErrorStatus("You already have a change branch with this name. Choose a different name.");
 					}
 				} catch (IOException e) {

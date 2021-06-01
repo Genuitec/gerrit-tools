@@ -2,15 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Genuitec Gerrit Tools
 Bundle-SymbolicName: com.genuitec.eclipse.gerrit.tools;singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.1.qualifier
 Bundle-Activator: com.genuitec.eclipse.gerrit.tools.GerritToolsPlugin
 Bundle-Vendor: Genuitec, LLC
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.egit.core;bundle-version="[3.4.0,5.0.0)";visibility:=reexport,
- org.eclipse.egit.ui;bundle-version="[3.4.0,5.0.0)";visibility:=reexport,
+ org.eclipse.egit.core;bundle-version="[5.0.0,6.0.0)";visibility:=reexport,
+ org.eclipse.egit.ui;bundle-version="[5.0.0,6.0.0)";visibility:=reexport,
  org.eclipse.core.resources;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.jgit;bundle-version="[3.4.0,5.0.0)";visibility:=reexport,
+ org.eclipse.jgit;bundle-version="[5.0.0,6.0.0)";visibility:=reexport,
  org.eclipse.team.cvs.core;bundle-version="[3.3.0,4.0.0)";resolution:=optional,
  org.eclipse.team.cvs.ssh2;bundle-version="[3.2.0,4.0.0)";resolution:=optional,
  org.eclipse.team.cvs.ui;bundle-version="[3.3.0,4.0.0)";resolution:=optional,
@@ -22,7 +22,7 @@ Require-Bundle: org.eclipse.ui,
  com.google.gerrit.common;bundle-version="2.1.5";resolution:=optional,
  com.google.gerrit.reviewdb;bundle-version="2.1.5";resolution:=optional,
  org.eclipse.mylyn.tasks.core;bundle-version="[3.12.0,4.0.0)";resolution:=optional,
- org.eclipse.mylyn.reviews.core;bundle-version="[2.3.0, 3.0.0)";resolution:=optional,
+ org.eclipse.mylyn.reviews.core;bundle-version="[2.3.0,3.0.0)";resolution:=optional,
  org.eclipse.mylyn.tasks.ui;bundle-version="[3.12.0,4.0.0)";resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

@@ -185,7 +185,7 @@ public class RepositoryUtils {
 					try {
 						monitor.beginTask("Fetching updates from origin", 100);
 						FetchOperationUI fetchOp = new FetchOperationUI(repository, 
-								new RemoteConfig(repository.getConfig(), "origin"), 3000, false); //$NON-NLS-1$
+								new RemoteConfig(repository.getConfig(), "origin"), false); //$NON-NLS-1$
 						fetchOp.setCredentialsProvider(new EGitCredentialsProvider());
 						fetchOp.execute(new SubProgressMonitor(monitor, 100));
 					} catch (Exception e) {

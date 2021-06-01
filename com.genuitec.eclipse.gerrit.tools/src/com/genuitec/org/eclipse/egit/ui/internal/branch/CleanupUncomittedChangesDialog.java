@@ -111,7 +111,7 @@ public class CleanupUncomittedChangesDialog extends MessageDialog {
 		createButton(parent, IDialogConstants.SKIP_ID,
 				UIText.BranchResultDialog_buttonStash, false);
 		createButton(parent, IDialogConstants.ABORT_ID,
-				UIText.BranchResultDialog_buttonReset, false);
+				UIText.BranchResultDialog_buttonDiscardChanges, false);
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, true);
 	}

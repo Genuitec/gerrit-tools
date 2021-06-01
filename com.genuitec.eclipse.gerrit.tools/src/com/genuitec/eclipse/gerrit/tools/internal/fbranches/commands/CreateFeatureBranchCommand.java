@@ -122,7 +122,7 @@ public class CreateFeatureBranchCommand extends FeatureBranchCommand {
 				}
 			}
 			
-			FetchOperationUI fetchOp = new FetchOperationUI(repository, new RemoteConfig(repository.getConfig(), "origin"), 3000, false);
+			FetchOperationUI fetchOp = new FetchOperationUI(repository, new RemoteConfig(repository.getConfig(), "origin"), false);
 			fetchOp.setCredentialsProvider(new EGitCredentialsProvider());
 			fetchOp.execute(monitor);
 		}

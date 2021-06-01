@@ -145,7 +145,7 @@ public final class BranchingUtils {
 			return false;
 		}
 		if (!unmerged.isEmpty()) {
-			MessageDialog messageDialog = new UnmergedBranchDialog<Ref>(
+			MessageDialog messageDialog = new UnmergedBranchDialog(
 						shell, unmerged);
 			if (messageDialog.open() != Window.OK)
 				return false;

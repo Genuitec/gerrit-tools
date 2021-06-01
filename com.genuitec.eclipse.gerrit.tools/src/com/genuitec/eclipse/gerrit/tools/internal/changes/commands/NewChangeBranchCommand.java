@@ -83,7 +83,7 @@ public class NewChangeBranchCommand extends SafeCommandHandler {
 					 + "/" + settings.get(CreateChangeBranchDialog.PROP_CHANGE_BRANCH_NAME);
 			String changeBranch = "refs/heads/" + simpleBranchName;
 			try {
-				Ref stable = repository.getRef(stableBranch);
+				Ref stable = repository.findRef(stableBranch);
 				AnyObjectId oid = stable.getLeaf().getObjectId();
 				
 				RefUpdate refUpdate = repository.updateRef(changeBranch);

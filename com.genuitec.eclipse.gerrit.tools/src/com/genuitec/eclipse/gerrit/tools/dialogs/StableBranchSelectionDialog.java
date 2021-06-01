@@ -42,7 +42,7 @@ public class StableBranchSelectionDialog extends SettingsDialog {
 
 			for (Repository repository: repositories) {
 				try {
-					if (repository.getRef("refs/heads/" + branchName) == null){
+					if (repository.findRef("refs/heads/" + branchName) == null){
 						return createErrorStatus("Repository {0} does not have stable branch {1}. Choose a different stable branch.", 
 								repository.getDirectory().getParentFile().getName(), branchName);
 					}

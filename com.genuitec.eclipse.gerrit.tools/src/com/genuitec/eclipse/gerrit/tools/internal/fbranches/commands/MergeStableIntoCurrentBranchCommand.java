@@ -84,7 +84,7 @@ public class MergeStableIntoCurrentBranchCommand extends FeatureBranchCommand {
 		String message = null;
 		Exception ex = null;
 		try {
-			Ref head = repository.getRef(Constants.HEAD);
+			Ref head = repository.findRef(Constants.HEAD);
 			if (head == null || !head.isSymbolic())
 				message = UIText.MergeAction_HeadIsNoBranch;
 			else if (!repository.getRepositoryState().equals(
@@ -136,7 +136,7 @@ public class MergeStableIntoCurrentBranchCommand extends FeatureBranchCommand {
 			String featureBranchName;
 			String userName = "anonymous";
 			try {
-				Ref head = repository.getRef(Constants.HEAD);
+				Ref head = repository.findRef(Constants.HEAD);
 				featureBranchName = head.getLeaf().getName();
 				IPath path = new Path(featureBranchName);
 				if (path.segmentCount() > 4 && "features".equals(path.segment(2))) { //$NON-NLS-1$
@@ -217,7 +217,7 @@ public class MergeStableIntoCurrentBranchCommand extends FeatureBranchCommand {
 		
 		private void fetchOrigin(IProgressMonitor monitor) throws Exception {
 			FetchOperationUI fetchOp = new FetchOperationUI(repository, 
-					new RemoteConfig(repository.getConfig(), "origin"), 3000, false); //$NON-NLS-1$
+					new RemoteConfig(repository.getConfig(), "origin"), false); //$NON-NLS-1$
 			fetchOp.setCredentialsProvider(new EGitCredentialsProvider());
 			fetchOp.execute(monitor);
 		}		

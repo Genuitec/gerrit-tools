@@ -37,7 +37,7 @@ public class SwitchToBranchCommand extends FeatureBranchCommand {
 		
 		for (Repository repo: repositories) {
 			try {
-				Ref remoteRef = repo.getRef(remoteBranchRef);
+				Ref remoteRef = repo.findRef(remoteBranchRef);
 				if (remoteRef != null) {
 					execute(event, repo, branchRef);
 				}
@@ -52,10 +52,10 @@ public class SwitchToBranchCommand extends FeatureBranchCommand {
 		//check if local branch exists
 		final String branchName = branchRef.substring("refs/heads/".length()); //$NON-NLS-1$
 		try {
-			if (repository.getRef(branchRef) == null) {
+			if (repository.findRef(branchRef) == null) {
 				//create local branch
 				String remoteBranchRef = "refs/remotes/origin/" + branchName; //$NON-NLS-1$
-				Ref remoteRef = repository.getRef(remoteBranchRef);
+				Ref remoteRef = repository.findRef(remoteBranchRef);
 				if (remoteRef == null) {
 					throw new RuntimeException(MessageFormat.format(
 							"Remote branch {0} doesn't exist",

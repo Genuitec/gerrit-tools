@@ -62,7 +62,7 @@ public class CleanupChangesCommand extends AbstractEvaluationHandler {
 		for (String change: changesToRemove) {
 			Ref ref;
 			try {
-				ref = repo.getRef("refs/heads/changes/" + change); //$NON-NLS-1$
+				ref = repo.findRef("refs/heads/changes/" + change); //$NON-NLS-1$
 				if (ref == null) {
 					throw new RuntimeException("Cannot acquire reference for change " +change);
 				}

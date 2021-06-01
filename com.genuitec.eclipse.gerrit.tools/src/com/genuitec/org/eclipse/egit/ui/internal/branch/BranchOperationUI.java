@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
@@ -45,7 +46,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.branch.CleanupUncomittedChangesDialog;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.CheckoutDialog;
@@ -256,11 +256,13 @@ public class BranchOperationUI {
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor) {
 				try {
+					final BranchProjectTracker tracker = new BranchProjectTracker(
+							repository);
+					final AtomicReference<IMemento> memento = new AtomicReference<IMemento>();
+					
 					if (restore) {
-						final BranchProjectTracker tracker = new BranchProjectTracker(
-								repository);
-						final AtomicReference<IMemento> memento = new AtomicReference<IMemento>();
-						bop.addPreExecuteTask(new PreExecuteTask() {
+						SubMonitor progress = SubMonitor.convert(monitor, 1);
+						(new PreExecuteTask() {
 
 							public void preExecute(Repository pRepo,
 									IProgressMonitor pMonitor)
@@ -269,9 +271,14 @@ public class BranchOperationUI {
 								// begins
 								memento.set(tracker.snapshot());
 							}
-						});
-						bop.addPostExecuteTask(new PostExecuteTask() {
+						}).preExecute(repository, progress.newChild(1));
+					}
 
+					bop.execute(monitor);
+					
+					if (restore) {
+						SubMonitor progress = SubMonitor.convert(monitor, 1);
+						(new PostExecuteTask() {
 							public void postExecute(Repository pRepo,
 									IProgressMonitor pMonitor)
 									throws CoreException {
@@ -282,12 +289,11 @@ public class BranchOperationUI {
 								// current branch's projects
 								tracker.save(snapshot).restore(pMonitor);
 							}
-						});
+						}).postExecute(repository, progress.newChild(1));;
 					}
-
-					bop.execute(monitor);
+					
 				} catch (CoreException e) {
-					switch (bop.getResult().getStatus()) {
+					switch (bop.getResult(repository).getStatus()) {
 					case CONFLICTS:
 					case NONDELETED:
 						break;
@@ -316,7 +322,7 @@ public class BranchOperationUI {
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent cevent) {
-				show(bop.getResult());
+				show(bop.getResult(repository));
 			}
 		});
 		job.schedule();
@@ -353,7 +359,7 @@ public class BranchOperationUI {
 		BranchOperation bop = new BranchOperation(repository, target);
 		bop.execute(monitor);
 
-		show(bop.getResult());
+		show(bop.getResult(repository));
 	}
 
 	private void askForTargetIfNecessary() {
@@ -461,9 +467,7 @@ public class BranchOperationUI {
 					CleanupUncomittedChangesDialog cleanupUncomittedChangesDialog = new CleanupUncomittedChangesDialog(
 							shell,
 							UIText.BranchResultDialog_CheckoutConflictsTitle,
-							NLS.bind(
-									UIText.BranchResultDialog_CheckoutConflictsMessage,
-									Repository.shortenRefName(target)),
+							UIText.AbstractRebaseCommandHandler_cleanupDialog_text,
 							repository, result.getConflictList());
 					cleanupUncomittedChangesDialog.open();
 					if (cleanupUncomittedChangesDialog.shouldContinue()) {
@@ -535,12 +539,12 @@ public class BranchOperationUI {
 			String[] buttons = new String[] {
 					UIText.BranchOperationUI_Continue,
 					IDialogConstants.CANCEL_LABEL };
-			String message = NLS.bind(UIText.BranchOperationUI_RunningLaunchMessage,
+			String message = NLS.bind(UIText.LaunchFinder_RunningLaunchMessage,
 					launchConfiguration.getName());
 			MessageDialogWithToggle continueDialog = new MessageDialogWithToggle(
-					getShell(), UIText.BranchOperationUI_RunningLaunchTitle,
+					getShell(), UIText.LaunchFinder_RunningLaunchTitle,
 					null, message, MessageDialog.NONE, buttons, 0,
-					UIText.BranchOperationUI_RunningLaunchDontShowAgain, false);
+					UIText.LaunchFinder_RunningLaunchDontShowAgain, false);
 			int result = continueDialog.open();
 			// cancel
 			if (result == IDialogConstants.CANCEL_ID || result == SWT.DEFAULT)

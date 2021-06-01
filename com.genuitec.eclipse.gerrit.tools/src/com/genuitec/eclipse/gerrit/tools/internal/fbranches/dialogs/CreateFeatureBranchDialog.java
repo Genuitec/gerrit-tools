@@ -48,7 +48,7 @@ public class CreateFeatureBranchDialog extends StableBranchSelectionDialog {
 			} else
 				try {
 					for (Repository repository: repositories) {
-						if (repository.getRef(refName) != null){
+						if (repository.findRef(refName) != null){
 							return createErrorStatus("You already have a feature branch with this name in repository {0}. Choose a different name", 
 									repository.getDirectory().getParentFile().getName());
 						}

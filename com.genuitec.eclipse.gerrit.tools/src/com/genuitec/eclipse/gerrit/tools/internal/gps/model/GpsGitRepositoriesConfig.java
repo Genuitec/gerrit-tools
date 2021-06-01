@@ -195,10 +195,10 @@ public class GpsGitRepositoriesConfig implements IGpsRepositoriesConfig {
                 //checkout the branch
 			    boolean newBranch = false;
 				try {
-				    Ref ref = repository.getRef(repositoryBranch);
+				    Ref ref = repository.findRef(repositoryBranch);
 				    if (localBranch && ref == null) {
 				        String originBranch = "refs/remotes/origin/" + branchName; //$NON-NLS-1$
-				        ref = repository.getRef(originBranch);
+				        ref = repository.findRef(originBranch);
 				        if (ref == null) {
 			                try {
 			                    new Git(repository).fetch().setRemote("origin").call(); //$NON-NLS-1$
@@ -209,7 +209,7 @@ public class GpsGitRepositoriesConfig implements IGpsRepositoriesConfig {
 			                                e)));
 			                }
 				        }
-                        ref = repository.getRef(originBranch);
+                        ref = repository.findRef(originBranch);
                         if (ref == null) {
                             throw new CoreException(new Status(IStatus.ERROR, GerritToolsPlugin.PLUGIN_ID, 
                                 MessageFormat.format("Cannot find branch \"{1}\" in repository \"{0}\".",
